@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><script src="https://static.readdy.ai/static/e.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jorge Carmena - Solo una. Haz que cuente.</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#00C2FF',secondary:'#1a1a1a'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body { font-family: 'Poppins', sans-serif; }
+.glow-blue { box-shadow: 0 0 20px rgba(0, 194, 255, 0.5); }
+.text-glow { text-shadow: 0 0 10px rgba(0, 194, 255, 0.3); }
+.glow-card { box-shadow: 0 0 30px rgba(0, 194, 255, 0.2); }
+.glow-border { border: 1px solid rgba(0, 194, 255, 0.3); box-shadow: 0 0 20px rgba(0, 194, 255, 0.1); }
+.glow-text { color: #00C2FF; text-shadow: 0 0 15px rgba(0, 194, 255, 0.4); }
+.parallax { transform: translateY(var(--scroll-y, 0)); }
+.heart {
+color: #ff4757;
+filter: drop-shadow(0 0 5px rgba(255, 71, 87, 0.5));
+}
+.heart-glow {
+position: relative;
+}
+.heart-glow::before {
+content: '';
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+width: 120%;
+height: 120%;
+background: radial-gradient(circle, rgba(255, 71, 87, 0.3) 0%, transparent 70%);
+border-radius: 50%;
+z-index: -1;
+}
+.heart-crossed {
+position: relative;
+opacity: 0.3;
+}
+.heart-crossed::after {
+content: '';
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%) rotate(45deg);
+width: 150%;
+height: 4px;
+background: rgba(255, 255, 255, 0.8);
+z-index: 1;
+}
+.blog-modal {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.9);
+z-index: 60;
+opacity: 0;
+visibility: hidden;
+transition: all 0.3s ease;
+backdrop-filter: blur(10px);
+}
+.blog-modal.active {
+opacity: 1;
+visibility: visible;
+}
+.blog-modal-content {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%) scale(0.8);
+width: 90%;
+background: rgba(26, 26, 26, 0.95);
+border-radius: 16px;
+padding: 2rem;
+border: 1px solid rgba(0, 194, 255, 0.3);
+box-shadow: 0 0 50px rgba(0, 194, 255, 0.2);
+transition: all 0.3s ease;
+max-height: 80vh;
+overflow-y: auto;
+}
+.blog-modal.active .blog-modal-content {
+transform: translate(-50%, -50%) scale(1);
+}
+.blog-modal-close {
+position: absolute;
+top: 1rem;
+right: 1rem;
+width: 40px;
+height: 40px;
+background: rgba(255, 255, 255, 0.1);
+border: none;
+border-radius: 50%;
+color: white;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.3s ease;
+z-index: 10;
+}
+.blog-modal-close:hover {
+background: rgba(0, 194, 255, 0.3);
+color: #00C2FF;
+}
+.video-container {
+position: relative;
+padding-bottom: 56.25%;
+height: 0;
+overflow: hidden;
+}
+.video-container iframe {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+}
+.fade-in {
+opacity: 0;
+transform: translateY(30px);
+transition: all 0.6s ease;
+}
+.fade-in.visible {
+opacity: 1;
+transform: translateY(0);
+}
+.slide-up {
+opacity: 0;
+transform: translateY(50px);
+transition: all 0.8s ease;
+}
+.slide-up.visible {
+opacity: 1;
+transform: translateY(0);
+}
+.menu-overlay {
+backdrop-filter: blur(10px);
+background: rgba(0, 0, 0, 0.95);
+}
+#particles-js {
+position: fixed;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+z-index: -1;
+}
+.section-transition {
+opacity: 0;
+transform: translateY(100px);
+transition: all 1s ease-out;
+}
+.section-transition.animate {
+opacity: 1;
+transform: translateY(0);
+}
+.testimonial-card {
+background: linear-gradient(145deg, rgba(26, 26, 26, 0.8), rgba(45, 45, 45, 0.8));
+backdrop-filter: blur(10px);
+border: 1px solid rgba(0, 194, 255, 0.2);
+}
+.stars {
+color: #00C2FF;
+filter: drop-shadow(0 0 5px rgba(0, 194, 255, 0.5));
+}
+.video-modal {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.9);
+z-index: 60;
+opacity: 0;
+visibility: hidden;
+transition: all 0.3s ease;
+backdrop-filter: blur(10px);
+}
+.video-modal.active {
+opacity: 1;
+visibility: visible;
+}
+.video-modal-content {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%) scale(0.8);
+width: 90%;
+max-width: 800px;
+background: rgba(26, 26, 26, 0.95);
+border-radius: 16px;
+padding: 2rem;
+border: 1px solid rgba(0, 194, 255, 0.3);
+box-shadow: 0 0 50px rgba(0, 194, 255, 0.2);
+transition: all 0.3s ease;
+}
+.video-modal.active .video-modal-content {
+transform: translate(-50%, -50%) scale(1);
+}
+.video-modal-close {
+position: absolute;
+top: 1rem;
+right: 1rem;
+width: 40px;
+height: 40px;
+background: rgba(255, 255, 255, 0.1);
+border: none;
+border-radius: 50%;
+color: white;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.3s ease;
+z-index: 10;
+}
+.video-modal-close:hover {
+background: rgba(0, 194, 255, 0.3);
+color: #00C2FF;
+}
+.share-text-overlay {
+opacity: 0;
+visibility: hidden;
+transform: translateY(-10px);
+transition: all 0.3s ease;
+position: absolute;
+top: -120px;
+left: 50%;
+transform: translateX(-50%) translateY(-10px);
+z-index: 10;
+}
+.share-text-overlay.show {
+opacity: 1;
+visibility: visible;
+transform: translateX(-50%) translateY(0);
+}
+</style>
+</head>
+<body class="bg-black text-white overflow-x-hidden">
+<!-- Particles Background -->
+<div id="particles-js"></div>
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-sm">
+<div class="flex justify-between items-center p-4">
+<div class="text-xl font-bold text-primary">Jorge Carmena</div>
+<button id="menuToggle" class="w-8 h-8 flex items-center justify-center">
+<i class="ri-menu-line text-2xl text-white"></i>
+</button>
+</div>
+</nav>
+<!-- Mobile Menu Overlay -->
+<div id="menuOverlay" class="fixed inset-0 z-40 menu-overlay transform translate-x-full transition-transform duration-300">
+<div class="flex flex-col items-center justify-center h-full space-y-8">
+<a href="#inicio" class="text-2xl font-semibold hover:text-primary transition-colors">Inicio</a>
+<a href="#sobre-mi" class="text-2xl font-semibold hover:text-primary transition-colors">Sobre mí</a>
+<a href="#vsl" class="text-2xl font-semibold hover:text-primary transition-colors">VSL</a>
+<a href="#recursos" class="text-2xl font-semibold hover:text-primary transition-colors">Recursos</a>
+<a href="#blog" class="text-2xl font-semibold hover:text-primary transition-colors">Blog</a>
+<a href="#contacto" class="text-2xl font-semibold hover:text-primary transition-colors">Contacto</a>
+</div>
+</div>
+<!-- Hero Section -->
+<section id="inicio" class="min-h-screen flex flex-col justify-center items-center px-4 py-20 relative section-transition">
+<div class="text-center space-y-8 max-w-2xl mx-auto">
+<h1 class="text-5xl md:text-7xl font-bold mb-8">
+Solo una.<br>
+<span class="glow-text">Haz que cuente.</span>
+</h1>
+<p class="text-gray-300 text-xl leading-relaxed mb-8">Experto en psicología aplicada, mentalidad y carisma. Te ayudo a reprogramar tu mente para lograr resultados reales.</p>
+<div class="mb-12 fade-in">
+<div class="video-container rounded-xl overflow-hidden glow-card">
+<iframe src="https://www.youtube.com/embed/60ItHLz5WEA" frameborder="0" allowfullscreen></iframe>
+</div>
+</div>
+<button onclick="window.open('https://form.typeform.com/to/DMtplynw', '_blank')" class="bg-primary hover:bg-blue-400 text-black font-bold py-4 px-8 !rounded-button glow-blue transition-all duration-300 whitespace-nowrap text-lg">
+Empieza tu transformación
+</button>
+</div>
+
+</section>
+<!-- Blog Modal -->
+<div id="blogModal" class="blog-modal">
+<div class="blog-modal-content max-w-4xl">
+<button id="closeBlogModal" class="blog-modal-close">
+<i class="ri-close-line text-xl"></i>
+</button>
+<div class="text-white">
+<h2 id="blogModalTitle" class="text-4xl font-bold mb-8 glow-text text-center"></h2>
+<div class="relative">
+<button id="shareButton" class="bg-primary hover:bg-blue-400 text-black font-bold py-3 px-8 !rounded-button glow-blue transition-all duration-300 whitespace-nowrap mb-4 relative z-20">
+Comparte en tus redes
+</button>
+<div id="shareText" class="share-text-overlay bg-gray-800/90 p-6 rounded-xl border border-primary/30 max-w-lg backdrop-blur-sm">
+<p class="text-gray-300 leading-relaxed">
+Haz una <span class="text-primary font-bold">captura</span> a este apartado y súbela a instagram mencionando a <span class="text-primary font-bold">@jorge_carmena</span> para entrar en el <span class="text-primary font-bold">sorteo</span> de un curso <span class="text-primary font-bold">GRATIS</span>
+</p>
+</div>
+</div>
+<div id="blogModalContent" class="prose prose-lg max-w-none text-gray-300 leading-relaxed text-lg whitespace-pre-line mb-8"></div>
+</div>
+</div>
+</div>
+<!-- Sobre Mí Section -->
+<section id="sobre-mi" class="py-32 px-4 section-transition">
+<div class="max-w-6xl mx-auto">
+<h2 class="text-5xl font-bold text-center mb-20 fade-in">
+Quién soy <span class="glow-text">realmente</span>
+</h2>
+<div class="max-w-4xl mx-auto">
+<!-- Content Cards -->
+<div class="space-y-8 fade-in mb-16">
+<div class="bg-gray-900/50 p-8 rounded-xl border-l-4 border-primary backdrop-blur-sm">
+<p class="text-white leading-relaxed text-lg">
+Durante años me he <span class="text-primary font-semibold">obsesionado</span> con entender la mente humana.
+</p>
+</div>
+<div class="bg-gray-900/50 p-8 rounded-xl border-l-4 border-primary backdrop-blur-sm">
+<p class="text-white leading-relaxed text-lg">
+No soy psicólogo, pero tengo <span class="text-primary font-semibold">amplios conocimientos</span> de psicología práctica.
+</p>
+</div>
+<div class="bg-gray-900/50 p-8 rounded-xl border-l-4 border-primary backdrop-blur-sm">
+<p class="text-white leading-relaxed text-lg">
+Ayudo a personas a dejar de sentirse perdidas y a construir una <span class="text-primary font-semibold">mente fuerte</span>.
+</p>
+</div>
+</div>
+<!-- Lives System -->
+<div class="flex justify-center space-x-8 my-16">
+<div class="heart-glow">
+<i class="ri-heart-fill text-8xl heart heart-crossed"></i>
+</div>
+<div class="heart-glow">
+<i class="ri-heart-fill text-8xl heart heart-crossed"></i>
+</div>
+<div class="heart-glow">
+<i class="ri-heart-fill text-8xl heart"></i>
+</div>
+</div>
+<div class="text-center">
+<button onclick="window.open('https://form.typeform.com/to/DMtplynw', '_blank')" class="bg-primary hover:bg-blue-400 text-black font-bold py-4 px-8 !rounded-button glow-blue transition-all duration-300 whitespace-nowrap">
+Descubre cómo puedo ayudarte
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- VSL Section -->
+<section id="vsl" class="py-32 px-4 section-transition">
+<div class="max-w-4xl mx-auto">
+<h2 class="text-5xl font-bold text-center mb-12 fade-in">Tienes que <span class="glow-text">ver esto</span></h2>
+<div class="video-container rounded-xl overflow-hidden mb-12 fade-in glow-card">
+<iframe src="https://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>
+</div>
+<p class="text-gray-300 text-center text-xl mb-12 fade-in max-w-2xl mx-auto">Descubre los secretos de la mentalidad ganadora y cómo aplicar la psicología para transformar tu vida completamente.</p>
+<div class="text-center fade-in">
+<button onclick="window.open('https://form.typeform.com/to/DMtplynw', '_blank')" class="bg-primary hover:bg-blue-400 text-black font-bold py-4 px-8 !rounded-button glow-blue transition-all duration-300 whitespace-nowrap text-lg">
+Empieza tu transformación
+</button>
+</div>
+</div>
+</section>
+<!-- Recursos Section -->
+<section id="recursos" class="py-32 px-4 section-transition">
+<div class="max-w-6xl mx-auto">
+<h2 class="text-5xl font-bold text-center mb-20 fade-in"><span class="glow-text">Recursos</span> y Videos</h2>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="bg-gray-900/30 rounded-xl overflow-hidden slide-up glow-card backdrop-blur-sm">
+<div class="video-container">
+<iframe src="https://www.youtube.com/embed/ScMzIvxBSi4" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="p-8">
+<h3 class="text-2xl font-bold mb-3 glow-text">Mentalidad de Abundancia</h3>
+<p class="text-gray-400 mb-6 leading-relaxed">Aprende a cambiar tu mentalidad de escasez por una de abundancia total.</p>
+<button class="bg-primary hover:bg-blue-400 text-black font-semibold py-3 px-6 !rounded-button transition-colors whitespace-nowrap glow-blue video-btn"
+data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
+data-title="Mentalidad de Abundancia"
+data-description="En este video aprenderás a reprogramar tu mente para salir de la mentalidad de escasez y adoptar una mentalidad de abundancia. Descubrirás técnicas prácticas para cambiar tus creencias limitantes y comenzar a ver oportunidades donde antes solo veías obstáculos. La abundancia no es solo sobre dinero, es una forma de pensar que transformará todas las áreas de tu vida.">
+Ver ahora
+</button>
+</div>
+</div>
+<div class="bg-gray-900/30 rounded-xl overflow-hidden slide-up glow-card backdrop-blur-sm">
+<div class="video-container">
+<iframe src="https://www.youtube.com/embed/ZXsQAXx_ao0" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="p-8">
+<h3 class="text-2xl font-bold mb-3 glow-text">Supera tus Limitaciones</h3>
+<p class="text-gray-400 mb-6 leading-relaxed">Identifica y destruye las creencias que te limitan para alcanzar tu potencial.</p>
+<button class="bg-primary hover:bg-blue-400 text-black font-semibold py-3 px-6 !rounded-button transition-colors whitespace-nowrap glow-blue video-btn"
+data-video="https://www.youtube.com/embed/ZXsQAXx_ao0"
+data-title="Supera tus Limitaciones"
+data-description="Todos tenemos creencias limitantes que nos impiden alcanzar nuestro verdadero potencial. En este video te enseño un método paso a paso para identificar estas creencias tóxicas, entender de dónde vienen y más importante aún, cómo eliminarlas de tu mente para siempre. Es hora de liberarte de las cadenas mentales que tú mismo te has puesto.">
+Ver ahora
+</button>
+</div>
+</div>
+<div class="bg-gray-900/30 rounded-xl overflow-hidden slide-up glow-card backdrop-blur-sm">
+<div class="video-container">
+<iframe src="https://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="p-8">
+<h3 class="text-2xl font-bold mb-3 glow-text">Desarrolla tu Carisma</h3>
+<p class="text-gray-400 mb-6 leading-relaxed">Técnicas probadas para desarrollar un carisma magnético y auténtico.</p>
+<button class="bg-primary hover:bg-blue-400 text-black font-semibold py-3 px-6 !rounded-button transition-colors whitespace-nowrap glow-blue video-btn"
+data-video="https://www.youtube.com/embed/9bZkp7q19f0"
+data-title="Desarrolla tu Carisma"
+data-description="El carisma no es algo con lo que naces. Es una habilidad que puedes desarrollar. En este video te comparto las técnicas específicas que he usado para desarrollar presencia magnética, comunicación efectiva y la capacidad de conectar genuinamente con cualquier persona. Aprenderás los secretos de la comunicación no verbal, cómo proyectar confianza y cómo hacer que otros se sientan especiales en tu presencia.">
+Ver ahora
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Video Modal -->
+<div id="videoModal" class="video-modal">
+<div class="video-modal-content">
+<button id="closeModal" class="video-modal-close">
+<i class="ri-close-line text-xl"></i>
+</button>
+<div id="modalVideoContainer" class="video-container rounded-xl overflow-hidden mb-6 glow-card">
+</div>
+<div class="text-white">
+<h3 id="modalTitle" class="text-2xl font-bold mb-4 glow-text"></h3>
+<p id="modalDescription" class="text-gray-300 leading-relaxed"></p>
+</div>
+</div>
+</div>
+<!-- Testimonios Section -->
+<section class="py-32 px-4 section-transition">
+<div class="max-w-4xl mx-auto">
+<h2 class="text-5xl font-bold text-center mb-8 fade-in glow-text">Testimonios</h2>
+<p class="text-xl text-center text-gray-400 mb-16 italic fade-in">"No importa de dónde vengas. Importa lo que haces a partir de hoy."</p>
+<div class="relative mb-16">
+<div class="testimonial-slider overflow-hidden">
+<div class="testimonial-track flex transition-transform duration-500 ease-in-out">
+<div class="testimonial-slide w-full flex-shrink-0">
+<div class="testimonial-card rounded-2xl p-12 slide-up">
+<div class="flex justify-center mb-8">
+<div class="flex space-x-2">
+<i class="ri-star-fill text-2xl stars"></i>
+<i class="ri-star-fill text-2xl stars"></i>
+<i class="ri-star-fill text-2xl stars"></i>
+<i class="ri-star-fill text-2xl stars"></i>
+<i class="ri-star-fill text-2xl stars"></i>
+</div>
+</div>
+<blockquote class="text-2xl text-center text-white italic leading-relaxed mb-8">
+"Jorge me ayudó a reprogramar mi mentalidad. Ahora veo las oportunidades donde antes solo veía problemas."
+</blockquote>
+<div class="text-center">
+<div class="text-xl font-bold text-white mb-2">María González</div>
+<div class="text-primary font-medium">Emprendedora</div>
+</div>
+</div>
+</div>
+<div class="testimonial-slide w-full flex-shrink-0">
+<div class="testimonial-card rounded-2xl p-12 slide-up">
+<div class="flex justify-center mb-8">
+<div class="flex space-x-2">
+<i class="ri-star-fill text-2xl stars"></i>
+<i class="ri-star-fill text-2xl stars"></i>
+<i class="ri-star-fill text-2xl stars"></i>
+<i class="ri-star-fill text-2xl stars"></i>
+<i class="ri-star-fill text-2xl stars"></i>
+</div>
+</div>
+<blockquote class="text-2xl text-center text-white italic leading-relaxed mb-8">
+"Sus técnicas cambiaron completamente mi forma de ver los desafíos. Pasé de víctima a protagonista de mi propia historia."
+</blockquote>
+<div class="text-center">
+<div class="text-xl font-bold text-white mb-2">Carlos Mendoza</div>
+<div class="text-primary font-medium">Ejecutivo</div>
+</div>
+</div>
+</div>
+<div class="testimonial-slide w-full flex-shrink-0">
+<div class="testimonial-card rounded-2xl p-12 slide-up">
+<div class="flex justify-center mb-8">
+<div class="flex space-x-2">
+<i class="ri-star-fill text-2xl stars"></i>
+<i class="ri-star-fill text-2xl stars"></i>
+<i class="ri-star-fill text-2xl stars"></i>
+<i class="ri-star-fill text-2xl stars"></i>
+<i class="ri-star-fill text-2xl stars"></i>
+</div>
+</div>
+<blockquote class="text-2xl text-center text-white italic leading-relaxed mb-8">
+"Jorge no te dice lo que quieres escuchar, te dice lo que necesitas escuchar. Eso marca toda la diferencia."
+</blockquote>
+<div class="text-center">
+<div class="text-xl font-bold text-white mb-2">Ana Rodríguez</div>
+<div class="text-primary font-medium">Coach Personal</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center space-x-4 mt-8">
+<button class="testimonial-prev w-12 h-12 flex items-center justify-center bg-gray-800/50 hover:bg-primary rounded-full transition-colors backdrop-blur-sm">
+<i class="ri-arrow-left-line text-xl"></i>
+</button>
+<button class="testimonial-next w-12 h-12 flex items-center justify-center bg-gray-800/50 hover:bg-primary rounded-full transition-colors backdrop-blur-sm">
+<i class="ri-arrow-right-line text-xl"></i>
+</button>
+</div>
+<div class="flex justify-center space-x-2 mt-6">
+<div class="testimonial-dot w-3 h-3 rounded-full bg-primary cursor-pointer"></div>
+<div class="testimonial-dot w-3 h-3 rounded-full bg-gray-600 cursor-pointer"></div>
+<div class="testimonial-dot w-3 h-3 rounded-full bg-gray-600 cursor-pointer"></div>
+</div>
+</div>
+<div class="text-center fade-in">
+<button onclick="window.open('https://form.typeform.com/to/DMtplynw', '_blank')" class="bg-primary hover:bg-blue-400 text-black font-bold py-4 px-8 !rounded-button glow-blue transition-all duration-300 whitespace-nowrap text-lg">
+Únete a ellos
+</button>
+</div>
+</div>
+</section>
+<!-- Blog Section -->
+<section id="blog" class="py-32 px-4 section-transition">
+<div class="max-w-6xl mx-auto">
+<div class="text-center mb-20">
+<h2 class="text-5xl font-bold mb-8 fade-in">
+Blog y <span class="glow-text">Reflexiones</span>
+</h2>
+<p class="text-xl text-gray-400 fade-in max-w-3xl mx-auto">
+Pensamientos directos sobre mentalidad, psicología práctica y cómo conseguir lo que quieres.
+</p>
+</div>
+<div class="grid md:grid-cols-2 gap-12 mb-16">
+<article class="bg-gray-900/30 rounded-xl p-8 slide-up glow-border hover:glow-card transition-all duration-300 backdrop-blur-sm">
+<div class="flex items-center text-gray-500 text-sm mb-4">
+<i class="ri-calendar-line mr-2"></i>
+<span>5 de noviembre de 2025</span>
+</div>
+<h3 class="text-2xl font-bold mb-4 text-white">Solo una vida. <span class="glow-text">Haz que cuente.</span></h3>
+<p class="text-gray-400 mb-6 leading-relaxed">
+El principio fundamental que cambiará tu perspectiva sobre la vida y el tiempo.
+</p>
+<button class="flex items-center text-primary hover:text-blue-300 font-semibold transition-colors blog-btn"
+data-title="Solo una vida. Haz que cuente."
+data-content="Todos los días escucho a personas quejándose de su vida. 'No tengo tiempo', 'Es muy difícil', 'No puedo cambiar'. Y yo siempre les digo lo mismo: tienes UNA vida. Una sola oportunidad. ¿De verdad la vas a desperdiciar haciendo excusas?
+El tiempo no es tu enemigo. La excusa sí lo es. Cada día que pasas esperando el 'momento perfecto' es un día menos que tienes para construir la vida que realmente quieres.
+La mentalidad de escasez te tiene atrapado. Te hace creer que no hay suficiente tiempo, suficientes oportunidades, suficientes recursos. Pero la verdad es que hay abundancia de todo eso. Solo necesitas cambiar tu perspectiva.
+No esperes a mañana. No esperes a que las condiciones sean perfectas. No esperes a tener más dinero, más tiempo, más conocimiento. Empieza hoy, con lo que tienes, desde donde estás.
+Tu vida es tu responsabilidad. Nadie más va a cambiarla por ti. Nadie más va a tomar las decisiones difíciles. Nadie más va a hacer el trabajo. Eres tú. Solo tú.
+Así que te pregunto: ¿Qué vas a hacer con tu única vida? ¿La vas a vivir o la vas a desperdiciar? La elección es tuya. Siempre ha sido tuya.">
+Leer más <i class="ri-arrow-right-line ml-2"></i>
+</button>
+</article>
+<article class="bg-gray-900/30 rounded-xl p-8 slide-up glow-border hover:glow-card transition-all duration-300 backdrop-blur-sm">
+<div class="flex items-center text-gray-500 text-sm mb-4">
+<i class="ri-calendar-line mr-2"></i>
+<span>5 de noviembre de 2025</span>
+</div>
+<h3 class="text-2xl font-bold mb-4 text-white">Por qué no <span class="glow-text">consigues</span> lo que quieres</h3>
+<p class="text-gray-400 mb-6 leading-relaxed">
+Descubre la razón número uno por la que las personas no logran sus objetivos.
+</p>
+<button class="flex items-center text-primary hover:text-blue-300 font-semibold transition-colors blog-btn"
+data-title="Por qué no consigues lo que quieres"
+data-content="La respuesta es simple y brutal: porque no lo quieres lo suficiente.
+'Pero Jorge, yo sí quiero cambiar mi vida', me dirás. No. Lo que quieres es que tu vida cambie sin que tú tengas que cambiar. Quieres los resultados sin el proceso. Quieres la transformación sin la incomodidad.
+El problema no es tu falta de conocimiento. No es tu falta de recursos. No es tu falta de oportunidades. El problema es tu falta de compromiso real contigo mismo.
+Mientes. Te mientes todos los días. Te dices que vas a empezar mañana. Te dices que esta vez será diferente. Te dices que realmente lo intentaste. Pero sabes que no es verdad.
+La diferencia entre querer algo y conseguirlo está en una palabra: sacrificio. Todo lo que quieres está al otro lado de lo que no estás dispuesto a hacer.
+¿Quieres un cuerpo mejor? Deja de comer basura. ¿Quieres más dinero? Deja de gastar en tonterías y aprende nuevas habilidades. ¿Quieres mejores relaciones? Deja de ser tóxico y trabaja en ti mismo.
+Es así de simple. Y así de difícil.
+Porque la verdad es que preferimos la comodidad de quejarnos a la incomodidad de cambiar. Preferimos la familiaridad de nuestros problemas a lo desconocido de nuestras soluciones.
+Deja de mentirte. Si realmente quisieras lo que dices que quieres, ya lo tendrías. O al menos estarías trabajando cada día para conseguirlo.
+La pregunta no es '¿qué quieres?'. La pregunta es '¿qué estás dispuesto a sacrificar para conseguirlo?'.">
+Leer más <i class="ri-arrow-right-line ml-2"></i>
+</button>
+</article>
+<article class="bg-gray-900/30 rounded-xl p-8 slide-up glow-border hover:glow-card transition-all duration-300 backdrop-blur-sm">
+<div class="flex items-center text-gray-500 text-sm mb-4">
+<i class="ri-calendar-line mr-2"></i>
+<span>3 de noviembre de 2025</span>
+</div>
+<h3 class="text-2xl font-bold mb-4 text-white">La trampa de la <span class="glow-text">zona de confort</span></h3>
+<p class="text-gray-400 mb-6 leading-relaxed">
+Por qué tu cerebro te sabotea cuando intentas cambiar y cómo superarlo.
+</p>
+<button class="flex items-center text-primary hover:text-blue-300 font-semibold transition-colors blog-btn"
+data-title="La trampa de la zona de confort"
+data-content="Tu zona de confort no es cómoda. Es familiar. Hay una diferencia gigante.
+Puedes estar viviendo una vida de mierda, llena de problemas, estrés y insatisfacción, pero si es lo que conoces, tu cerebro la preferirá mil veces antes que lo desconocido.
+Esto es evolutivo. Durante miles de años, lo desconocido representaba peligro. Cambiar de cueva podía significar encontrarte con un depredador. Así que nuestro cerebro desarrolló un sistema: mantén las cosas como están, aunque sean malas.
+El problema es que ahora vivimos en un mundo diferente. Lo desconocido ya no es sinónimo de muerte. Pero tu cerebro primitivo no lo sabe. Sigue funcionando con el software de hace 10,000 años.
+Por eso cuando decides cambiar tu vida, tu mente te bombardea con excusas:
+- 'Es muy arriesgado'
+- 'Mejor espera un poco más'
+- 'No estás preparado'
+- 'Podrías fracasar'
+Todo eso son mecanismos de supervivencia obsoletos tratando de mantenerte 'seguro' en tu miseria familiar.
+La zona de confort no es un lugar. Es una prisión mental. Y la única forma de salir es reconocer que el verdadero peligro no está en cambiar. El verdadero peligro está en quedarte donde estás.
+Porque mientras tú te quedas en tu zona de confort, la vida sigue avanzando. Las oportunidades pasan. El tiempo se acaba. Y un día te despiertas dándote cuenta de que tu 'seguridad' te costó toda tu vida.
+Sal de ahí. Incomódate. Haz cosas que te den miedo. Porque del otro lado del miedo está todo lo que siempre has querido.">
+Leer más <i class="ri-arrow-right-line ml-2"></i>
+</button>
+</article>
+<article class="bg-gray-900/30 rounded-xl p-8 slide-up glow-border hover:glow-card transition-all duration-300 backdrop-blur-sm">
+<div class="flex items-center text-gray-500 text-sm mb-4">
+<i class="ri-calendar-line mr-2"></i>
+<span>1 de noviembre de 2025</span>
+</div>
+<h3 class="text-2xl font-bold mb-4 text-white">El mito de la <span class="glow-text">motivación</span></h3>
+<p class="text-gray-400 mb-6 leading-relaxed">
+La verdad incómoda sobre por qué la motivación no funciona y qué sí lo hace.
+</p>
+<button class="flex items-center text-primary hover:text-blue-300 font-semibold transition-colors blog-btn"
+data-title="El mito de la motivación"
+data-content="La motivación es una mentira. Una droga emocional que te hace sentir bien por cinco minutos y luego te deja peor que antes.
+'Es que no me siento motivado', me dicen. Como si la motivación fuera un prerequisito para la acción. Como si las personas exitosas estuvieran motivadas las 24 horas del día.
+Noticia: nadie está motivado todo el tiempo. Ni siquiera yo. Ni siquiera las personas que más admiras.
+La diferencia es que ellos entienden algo que tú no: la acción crea motivación, no al revés.
+¿Sabes cuándo me levanto a hacer ejercicio? Cuando NO tengo ganas. ¿Sabes cuándo trabajo en mis proyectos? Cuando preferiría estar viendo Netflix. ¿Sabes cuándo hago las cosas que realmente importan? Exactamente cuando menos quiero hacerlas.
+Porque he aprendido que esperar a 'sentirme motivado' es esperar una fantasía. Es como esperar a que llueva en el desierto.
+La motivación es un estado emocional temporal. Los hábitos son permanentes. La disciplina es permanente. Los sistemas son permanentes.
+Deja de buscar motivación. Busca rutinas. Deja de buscar inspiración. Busca consistencia. Deja de buscar el momento perfecto. Busca el próximo paso pequeño que puedes dar ahora mismo.
+La persona que espera estar motivada nunca empieza. La persona que empieza sin estar motivada nunca para.
+¿Cuál quieres ser tú?
+Porque al final del día, la vida no se construye con momentos de inspiración. Se construye con decisiones aburridas, repetitivas y poco emocionantes que tomas todos los días cuando no tienes ganas de tomarlas.
+Esa es la diferencia entre los que hablan y los que hacen.">
+Leer más <i class="ri-arrow-right-line ml-2"></i>
+</button>
+</article>
+</div>
+<div class="text-center fade-in">
+<button onclick="window.open('https://form.typeform.com/to/DMtplynw', '_blank')" class="bg-primary hover:bg-blue-400 text-black font-bold py-4 px-8 !rounded-button glow-blue transition-all duration-300 whitespace-nowrap text-lg">
+Transforma tu vida ahora
+</button>
+</div>
+</div>
+</section>
+<!-- Contacto Section -->
+<section id="contacto" class="py-32 px-4 section-transition">
+<div class="max-w-3xl mx-auto text-center">
+<h2 class="text-5xl font-bold mb-8 fade-in">¿Listo para el <span class="glow-text">cambio</span>?</h2>
+<p class="text-2xl text-gray-300 mb-12 fade-in leading-relaxed">Solo tienes una vida. Es momento de hacerla contar.</p>
+<button onclick="window.open('https://form.typeform.com/to/DMtplynw', '_blank')" class="bg-primary hover:bg-blue-400 text-black font-bold py-6 px-12 text-xl !rounded-button glow-blue transition-all duration-300 mb-16 whitespace-nowrap fade-in">
+Empezar mi transformación
+</button>
+</div>
+</section>
+<!-- Footer -->
+<footer class="py-16 px-4 border-t border-gray-800/50">
+<div class="max-w-4xl mx-auto">
+<div class="text-center mb-12">
+<div class="text-3xl font-bold text-primary mb-3">Jorge Carmena</div>
+<div class="text-xl font-semibold text-gray-400">Solo una. <span class="glow-text">Haz que cuente.</span></div>
+</div>
+<div class="grid grid-cols-2 gap-12 mb-12">
+<div>
+<h4 class="font-semibold mb-6 text-lg">Navegación</h4>
+<div class="space-y-3">
+<a href="#inicio" class="block text-gray-400 hover:text-primary transition-colors">Inicio</a>
+<a href="#sobre-mi" class="block text-gray-400 hover:text-primary transition-colors">Sobre mí</a>
+<a href="#vsl" class="block text-gray-400 hover:text-primary transition-colors">VSL</a>
+<a href="#recursos" class="block text-gray-400 hover:text-primary transition-colors">Recursos</a>
+</div>
+</div>
+<div>
+<h4 class="font-semibold mb-6 text-lg">Contenido</h4>
+<div class="space-y-3">
+<a href="#blog" class="block text-gray-400 hover:text-primary transition-colors">Blog</a>
+<a href="#contacto" class="block text-gray-400 hover:text-primary transition-colors">Contacto</a>
+<a href="#" class="block text-gray-400 hover:text-primary transition-colors">Aviso Legal</a>
+<a href="#" class="block text-gray-400 hover:text-primary transition-colors">Términos</a>
+</div>
+</div>
+</div>
+
+<div class="text-center text-gray-500">
+<p>&copy; 2024 Jorge Carmena. Todos los derechos reservados.</p>
+</div>
+</div>
+</footer>
+<!-- Fixed CTA Button -->
+<div class="fixed bottom-6 right-6 z-30">
+<button onclick="window.open('https://form.typeform.com/to/DMtplynw', '_blank')" class="bg-primary hover:bg-blue-400 text-black font-bold py-4 px-6 !rounded-button glow-blue transition-all duration-300 whitespace-nowrap shadow-2xl">
+Empezar
+</button>
+</div>
+<script id="particles">
+document.addEventListener('DOMContentLoaded', function() {
+particlesJS('particles-js', {
+particles: {
+number: { value: 80, density: { enable: true, value_area: 800 } },
+color: { value: '#00C2FF' },
+shape: { type: 'circle' },
+opacity: { value: 0.5, random: false },
+size: { value: 3, random: true },
+line_linked: {
+enable: true,
+distance: 150,
+color: '#00C2FF',
+opacity: 0.4,
+width: 1
+},
+move: {
+enable: true,
+speed: 6,
+direction: 'none',
+random: false,
+straight: false,
+out_mode: 'out',
+bounce: false
+}
+},
+interactivity: {
+detect_on: 'canvas',
+events: {
+onhover: { enable: true, mode: 'repulse' },
+onclick: { enable: true, mode: 'push' },
+resize: true
+}
+},
+retina_detect: true
+});
+});
+</script>
+<script id="menuToggle">
+document.addEventListener('DOMContentLoaded', function() {
+const menuToggle = document.getElementById('menuToggle');
+const menuOverlay = document.getElementById('menuOverlay');
+const menuIcon = menuToggle.querySelector('i');
+menuToggle.addEventListener('click', function() {
+menuOverlay.classList.toggle('translate-x-full');
+if (menuOverlay.classList.contains('translate-x-full')) {
+menuIcon.className = 'ri-menu-line text-2xl text-white';
+} else {
+menuIcon.className = 'ri-close-line text-2xl text-white';
+}
+});
+const menuLinks = menuOverlay.querySelectorAll('a');
+menuLinks.forEach(link => {
+link.addEventListener('click', function(e) {
+e.preventDefault();
+const targetId = link.getAttribute('href').substring(1);
+const targetElement = document.getElementById(targetId);
+if (targetElement) {
+targetElement.scrollIntoView({ behavior: 'smooth' });
+}
+menuOverlay.classList.add('translate-x-full');
+menuIcon.className = 'ri-menu-line text-2xl text-white';
+});
+});
+});
+</script>
+<script id="scrollAnimations">
+document.addEventListener('DOMContentLoaded', function() {
+const observerOptions = {
+threshold: 0.1,
+rootMargin: '0px 0px -100px 0px'
+};
+const observer = new IntersectionObserver(function(entries) {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+entry.target.classList.add('visible');
+if (entry.target.classList.contains('section-transition')) {
+entry.target.classList.add('animate');
+}
+}
+});
+}, observerOptions);
+const fadeElements = document.querySelectorAll('.fade-in, .slide-up, .section-transition');
+fadeElements.forEach(el => observer.observe(el));
+});
+</script>
+<script id="videoModal">
+document.addEventListener('DOMContentLoaded', function() {
+const modal = document.getElementById('videoModal');
+const modalVideoContainer = document.getElementById('modalVideoContainer');
+const modalTitle = document.getElementById('modalTitle');
+const modalDescription = document.getElementById('modalDescription');
+const closeModal = document.getElementById('closeModal');
+const videoBtns = document.querySelectorAll('.video-btn');
+videoBtns.forEach(btn => {
+btn.addEventListener('click', function() {
+const videoSrc = btn.getAttribute('data-video');
+const title = btn.getAttribute('data-title');
+const description = btn.getAttribute('data-description');
+modalVideoContainer.innerHTML = `<iframe src="${videoSrc}" frameborder="0" allowfullscreen></iframe>`;
+modalTitle.textContent = title;
+modalDescription.textContent = description;
+modal.classList.add('active');
+document.body.style.overflow = 'hidden';
+});
+});
+function closeVideoModal() {
+modal.classList.remove('active');
+document.body.style.overflow = 'auto';
+setTimeout(() => {
+modalVideoContainer.innerHTML = '';
+}, 300);
+}
+closeModal.addEventListener('click', closeVideoModal);
+modal.addEventListener('click', function(e) {
+if (e.target === modal) {
+closeVideoModal();
+}
+});
+document.addEventListener('keydown', function(e) {
+if (e.key === 'Escape' && modal.classList.contains('active')) {
+closeVideoModal();
+}
+});
+});
+</script>
+<script id="blogModal">
+document.addEventListener('DOMContentLoaded', function() {
+const blogModal = document.getElementById('blogModal');
+const blogModalTitle = document.getElementById('blogModalTitle');
+const blogModalContent = document.getElementById('blogModalContent');
+const closeBlogModal = document.getElementById('closeBlogModal');
+const shareButton = document.getElementById('shareButton');
+const shareText = document.getElementById('shareText');
+const blogBtns = document.querySelectorAll('.blog-btn');
+blogBtns.forEach(btn => {
+btn.addEventListener('click', function() {
+const title = btn.getAttribute('data-title');
+const content = btn.getAttribute('data-content');
+blogModalTitle.textContent = title;
+blogModalContent.textContent = content;
+blogModal.classList.add('active');
+document.body.style.overflow = 'hidden';
+shareText.classList.remove('show');
+});
+});
+shareButton.addEventListener('click', function() {
+shareText.classList.toggle('show');
+});
+function closeBlogModalFunc() {
+blogModal.classList.remove('active');
+document.body.style.overflow = 'auto';
+shareText.classList.remove('show');
+}
+closeBlogModal.addEventListener('click', closeBlogModalFunc);
+blogModal.addEventListener('click', function(e) {
+if (e.target === blogModal) {
+closeBlogModalFunc();
+}
+});
+document.addEventListener('keydown', function(e) {
+if (e.key === 'Escape' && blogModal.classList.contains('active')) {
+closeBlogModalFunc();
+}
+});
+});
+</script>
+<script id="testimonialSlider">
+document.addEventListener('DOMContentLoaded', function() {
+const track = document.querySelector('.testimonial-track');
+const slides = document.querySelectorAll('.testimonial-slide');
+const prevBtn = document.querySelector('.testimonial-prev');
+const nextBtn = document.querySelector('.testimonial-next');
+const dots = document.querySelectorAll('.testimonial-dot');
+let currentSlide = 0;
+const totalSlides = slides.length;
+function updateSlider() {
+const translateX = -currentSlide * 100;
+track.style.transform = `translateX(${translateX}%)`;
+dots.forEach((dot, index) => {
+if (index === currentSlide) {
+dot.classList.remove('bg-gray-600');
+dot.classList.add('bg-primary');
+} else {
+dot.classList.remove('bg-primary');
+dot.classList.add('bg-gray-600');
+}
+});
+slides.forEach((slide, index) => {
+const card = slide.querySelector('.testimonial-card');
+if (index === currentSlide) {
+card.style.opacity = '1';
+card.style.transform = 'translateY(0)';
+} else {
+card.style.opacity = '0.5';
+card.style.transform = 'translateY(20px)';
+}
+});
+}
+function nextSlide() {
+currentSlide = (currentSlide + 1) % totalSlides;
+updateSlider();
+}
+function prevSlide() {
+currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+updateSlider();
+}
+nextBtn.addEventListener('click', nextSlide);
+prevBtn.addEventListener('click', prevSlide);
+dots.forEach((dot, index) => {
+dot.addEventListener('click', () => {
+currentSlide = index;
+updateSlider();
+});
+});
+updateSlider();
+setInterval(nextSlide, 5000);
+});
+</script>
+<script>
+!function (t, e) { var o, n, p, r; e.__SV || (window.posthog = e, e._i = [], e.init = function (i, s, a) { function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } } (p = t.createElement("script")).type = "text/javascript", p.crossOrigin = "anonymous", p.async = !0, p.src = s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js", (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r); var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], u.toString = function (t) { var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e }, u.people.toString = function () { return u.toString(1) + ".people (stub)" }, o = "init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a]) }, e.__SV = 1) }(document, window.posthog || []);
+posthog.init('phc_t9tkQZJiyi2ps9zUYm8TDsL6qXo4YmZx0Ot5rBlAlEd', {
+api_host: 'https://us.i.posthog.com',
+autocapture: false,
+capture_pageview: false,
+capture_pageleave: false,
+capture_performance: {
+web_vitals: false,
+},
+rageclick: false,
+})
+window.shareKey = 'nLE_d7heDsQxd-DRqLe8hA';
+window.host = 'readdy.ai';
+</script>
+<script src="https://static.readdy.ai/static/share.js"></script></body>
+</html>

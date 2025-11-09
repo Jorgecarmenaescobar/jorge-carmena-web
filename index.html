@@ -305,7 +305,7 @@ Comparte en tus redes
 <i class="ri-close-line"></i>
 </button>
 <p class="text-white leading-relaxed text-2xl font-bold text-center">
-Haz una <span class="text-primary font-bold text-3xl">captura</span> a este blog y súbela a instagram mencionando a <span class="text-primary font-bold text-3xl">@jorge_carmena</span> para entrar en el <span class="text-primary font-bold text-3xl">sorteo</span> de un curso <span class="text-primary font-bold text-3xl">GRATIS</span>
+Haz una <span class="text-primary font-bold text-3xl">captura</span> a este apartado y súbela a instagram mencionando a <span class="text-primary font-bold text-3xl">@jorge_carmena</span> para entrar en el <span class="text-primary font-bold text-3xl">sorteo</span> de un curso <span class="text-primary font-bold text-3xl">GRATIS</span>
 </p>
 </div>
 <div id="blogModalContent" class="prose prose-lg max-w-none text-gray-300 leading-relaxed text-lg whitespace-pre-line mb-8"></div>
@@ -834,24 +834,63 @@ blogBtns.forEach(btn => {
 btn.addEventListener('click', function() {
 const title = btn.getAttribute('data-title');
 const content = btn.getAttribute('data-content');
-blogModalTitle.textContent = title;
-blogModalContent.textContent = content;
 blogModal.classList.add('active');
 document.body.style.overflow = 'hidden';
 shareText.classList.remove('show');
+
+// Animate title change
+blogModalTitle.style.opacity = '0';
+blogModalTitle.style.transform = 'translateY(-20px)';
+setTimeout(() => {
+blogModalTitle.textContent = title;
+blogModalTitle.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+blogModalTitle.style.opacity = '1';
+blogModalTitle.style.transform = 'translateY(0)';
+}, 50);
+
+// Animate content change
+blogModalContent.style.opacity = '0';
+blogModalContent.style.transform = 'translateY(30px)';
+setTimeout(() => {
+blogModalContent.textContent = content;
+blogModalContent.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+blogModalContent.style.opacity = '1';
+blogModalContent.style.transform = 'translateY(0)';
+}, 100);
 });
 });
 shareButton.addEventListener('click', function() {
+const shareContainer = shareButton.parentElement;
 shareText.classList.add('show');
+setTimeout(() => {
+shareText.classList.remove('show');
+}, 7000);
+setTimeout(() => {
+shareContainer.style.transition = 'opacity 0.5s ease-out';
+shareContainer.style.opacity = '0';
+setTimeout(() => {
+shareContainer.style.display = 'none';
+}, 500);
+}, 10000);
 });
-
 document.getElementById('closeShareText').addEventListener('click', function() {
 shareText.classList.remove('show');
 });
 function closeBlogModalFunc() {
+const shareContainer = shareButton.parentElement;
 blogModal.classList.remove('active');
 document.body.style.overflow = 'auto';
 shareText.classList.remove('show');
+shareContainer.style.display = 'block';
+shareContainer.style.opacity = '1';
+
+// Reset text animations
+blogModalTitle.style.transition = '';
+blogModalTitle.style.opacity = '';
+blogModalTitle.style.transform = '';
+blogModalContent.style.transition = '';
+blogModalContent.style.opacity = '';
+blogModalContent.style.transform = '';
 }
 closeBlogModal.addEventListener('click', closeBlogModalFunc);
 blogModal.addEventListener('click', function(e) {
@@ -935,5 +974,3 @@ window.host = 'readdy.ai';
 </script>
 </body>
 </html>
-
-

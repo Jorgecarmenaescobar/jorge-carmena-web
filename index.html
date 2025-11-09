@@ -231,16 +231,18 @@ opacity: 0;
 visibility: hidden;
 transform: translateY(-10px);
 transition: all 0.3s ease;
-position: absolute;
-top: -120px;
+position: fixed;
+top: 50%;
 left: 50%;
-transform: translateX(-50%) translateY(-10px);
-z-index: 10;
+transform: translate(-50%, -50%) translateY(-10px);
+z-index: 70;
+width: 90%;
+max-width: 600px;
 }
 .share-text-overlay.show {
 opacity: 1;
 visibility: visible;
-transform: translateX(-50%) translateY(0);
+transform: translate(-50%, -50%) translateY(0);
 }
 </style>
 </head>
@@ -284,7 +286,6 @@ Solo una.<br>
 Empieza tu transformación
 </button>
 </div>
-
 </section>
 <!-- Blog Modal -->
 <div id="blogModal" class="blog-modal">
@@ -294,15 +295,18 @@ Empieza tu transformación
 </button>
 <div class="text-white">
 <h2 id="blogModalTitle" class="text-4xl font-bold mb-8 glow-text text-center"></h2>
-<div class="relative">
-<button id="shareButton" class="bg-primary hover:bg-blue-400 text-black font-bold py-3 px-8 !rounded-button glow-blue transition-all duration-300 whitespace-nowrap mb-4 relative z-20">
+<div class="sticky top-0 bg-gray-900/95 backdrop-blur-sm p-4 mb-6 rounded-xl border border-primary/20 z-20">
+<button id="shareButton" class="bg-primary hover:bg-blue-400 text-black font-bold py-3 px-8 !rounded-button glow-blue transition-all duration-300 whitespace-nowrap">
 Comparte en tus redes
 </button>
-<div id="shareText" class="share-text-overlay bg-gray-800/90 p-6 rounded-xl border border-primary/30 max-w-lg backdrop-blur-sm">
-<p class="text-gray-300 leading-relaxed">
-Haz una <span class="text-primary font-bold">captura</span> a este apartado y súbela a instagram mencionando a <span class="text-primary font-bold">@jorge_carmena</span> para entrar en el <span class="text-primary font-bold">sorteo</span> de un curso <span class="text-primary font-bold">GRATIS</span>
-</p>
 </div>
+<div id="shareText" class="share-text-overlay bg-black/95 p-8 rounded-2xl border-2 border-primary/50 backdrop-blur-lg shadow-2xl">
+<button id="closeShareText" class="absolute top-4 right-4 w-8 h-8 bg-gray-700/50 hover:bg-primary/30 rounded-full flex items-center justify-center text-white transition-colors">
+<i class="ri-close-line"></i>
+</button>
+<p class="text-white leading-relaxed text-2xl font-bold text-center">
+Haz una <span class="text-primary font-bold text-3xl">captura</span> a este apartado y súbela a instagram mencionando a <span class="text-primary font-bold text-3xl">@jorge_carmena</span> para entrar en el <span class="text-primary font-bold text-3xl">sorteo</span> de un curso <span class="text-primary font-bold text-3xl">GRATIS</span>
+</p>
 </div>
 <div id="blogModalContent" class="prose prose-lg max-w-none text-gray-300 leading-relaxed text-lg whitespace-pre-line mb-8"></div>
 </div>
@@ -324,7 +328,7 @@ Durante años me he <span class="text-primary font-semibold">obsesionado</span> 
 </div>
 <div class="bg-gray-900/50 p-8 rounded-xl border-l-4 border-primary backdrop-blur-sm">
 <p class="text-white leading-relaxed text-lg">
-Tengo <span class="text-primary font-semibold">amplios conocimientos</span> de psicología práctica.
+No soy psicólogo, pero tengo <span class="text-primary font-semibold">amplios conocimientos</span> de psicología práctica.
 </p>
 </div>
 <div class="bg-gray-900/50 p-8 rounded-xl border-l-4 border-primary backdrop-blur-sm">
@@ -680,7 +684,6 @@ Empezar mi transformación
 </div>
 </div>
 </div>
-
 <div class="text-center text-gray-500">
 <p>&copy; 2024 Jorge Carmena. Todos los derechos reservados.</p>
 </div>
@@ -839,7 +842,11 @@ shareText.classList.remove('show');
 });
 });
 shareButton.addEventListener('click', function() {
-shareText.classList.toggle('show');
+shareText.classList.add('show');
+});
+
+document.getElementById('closeShareText').addEventListener('click', function() {
+shareText.classList.remove('show');
 });
 function closeBlogModalFunc() {
 blogModal.classList.remove('active');
@@ -927,5 +934,4 @@ window.shareKey = 'nLE_d7heDsQxd-DRqLe8hA';
 window.host = 'readdy.ai';
 </script>
 <script src="https://static.readdy.ai/static/share.js"></script></body>
-
 </html>
